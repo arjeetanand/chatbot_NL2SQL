@@ -1,0 +1,11 @@
+python-dotenv
+pandas
+requests
+oci
+matplotlib
+langchain-community
+langchain-experimental
+langchain
+langchain-core
+streamlit
+plotly
