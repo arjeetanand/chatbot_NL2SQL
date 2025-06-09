@@ -620,7 +620,7 @@ with col2:
         for query in sample_queries:
             if st.button(f"🔄 {query}", key=f"sample_{hash(query)}"):
                 st.session_state.messages.append({"role": "user", "content": query})
-                st.experimental_rerun()
+                st.rerun()
 
 # Advanced Features Section
 st.header("🚀 Advanced Features")
