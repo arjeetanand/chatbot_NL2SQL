@@ -2,6 +2,8 @@
 
 This folder contains the API and Streamlit web application for the NL2SQL Analytics Platform. The system enables users to query a database using natural language, automatically generates SQL, and provides advanced analytics and interactive visualizations.
 
+https://chatbotnl2sql.streamlit.app/
+
 ## 📦 Features
 
 - **Natural Language to SQL**: Converts user questions into SQL queries using LLMs.
