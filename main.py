@@ -32,7 +32,7 @@ class CohereLLM(LLM):
     _api_key: str = None
     _base_url: str = None
 
-    def __init__(self, api_key: str, base_url: str = "https://api.cohere.ai/v1/generate", **kwargs):
+    def __init__(self, api_key: str, base_url: str = "https://api.cohere.ai/v1/chat", **kwargs):
         super().__init__(**kwargs)
         self._api_key = api_key
         self._base_url = base_url
