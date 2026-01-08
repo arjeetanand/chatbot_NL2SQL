@@ -52,36 +52,67 @@ class CohereLLM(LLM):
             logger.error(f"Error calling Cohere API: {e}")
             raise
 
-    def _call_cohere(self, prompt: str, max_tokens: int = 4000, temperature: float = 0.1) -> str:
-        """Generate response using Cohere API"""
+    # def _call_cohere(self, prompt: str, max_tokens: int = 4000, temperature: float = 0.1) -> str:
+    #     """Generate response using Cohere API"""
+    #     try:
+    #         headers = {
+    #             'Authorization': f'Bearer {self._api_key}',
+    #             'Content-Type': 'application/json',
+    #         }
+
+    #         data = {
+    #             "model": "command-r-plus",  # You can change this based on your subscription
+    #             "prompt": prompt,
+    #             "max_tokens": max_tokens,
+    #             "temperature": temperature,
+    #             "frequency_penalty": 0,
+    #             "top_p": 0.75,
+    #             "top_k": 0,
+    #             "stop_sequences": [],  # Optional
+    #             "return_likelihoods": "NONE"
+    #         }
+
+    #         response = requests.post(self._base_url, json=data, headers=headers)
+    #         response.raise_for_status()
+
+    #         raw_response = response.json()["generations"][0]["text"]
+    #         logger.debug(f"Raw Cohere response: {raw_response}")
+    #         return raw_response
+
+    #     except Exception as e:
+    #         logger.error(f"Error generating response from Cohere: {e}")
+    #         raise
+
+    def _call_cohere(self, prompt: str, temperature: float = 0.1) -> str:
+        """Generate response using Cohere Chat API"""
         try:
             headers = {
-                'Authorization': f'Bearer {self._api_key}',
-                'Content-Type': 'application/json',
+                "Authorization": f"Bearer {self._api_key}",
+                "Content-Type": "application/json",
             }
 
-            data = {
-                "model": "command-r-plus",  # You can change this based on your subscription
-                "prompt": prompt,
-                "max_tokens": max_tokens,
+            payload = {
+                "model": "command-a-03-2025",
+                "message": prompt,
                 "temperature": temperature,
-                "frequency_penalty": 0,
-                "top_p": 0.75,
-                "top_k": 0,
-                "stop_sequences": [],  # Optional
-                "return_likelihoods": "NONE"
             }
 
-            response = requests.post(self._base_url, json=data, headers=headers)
+            response = requests.post(
+                "https://api.cohere.ai/v1/chat",
+                headers=headers,
+                json=payload,
+                timeout=30
+            )
+
             response.raise_for_status()
 
-            raw_response = response.json()["generations"][0]["text"]
-            logger.debug(f"Raw Cohere response: {raw_response}")
-            return raw_response
+            # Chat response format
+            return response.json()["text"]
 
         except Exception as e:
-            logger.error(f"Error generating response from Cohere: {e}")
+            logger.error(f"Error generating response from Cohere Chat API: {e}")
             raise
+
     
     def _generate_response_for_sql(self, prompt: str, max_tokens: int = 4000, temperature: float = 0.1) -> str:
         """Generate SQL response using Oracle GenAI"""
