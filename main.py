@@ -116,13 +116,13 @@ class CohereLLM(LLM):
     
     def _generate_response_for_sql(self, prompt: str, max_tokens: int = 4000, temperature: float = 0.1) -> str:
         """Generate SQL response using Oracle GenAI"""
-        raw_response = self._call_cohere(prompt, max_tokens, temperature)
+        raw_response = self._call_cohere(prompt, temperature)
         cleaned_response = self._extract_sql_from_response(raw_response)
         return cleaned_response
 
     def _generate_response_for_summary(self, prompt: str, max_tokens: int = 4000, temperature: float = 0.7) -> str:
         """Generate natural language summary using Oracle GenAI"""
-        raw_response = self._call_cohere(prompt, max_tokens, temperature)
+        raw_response = self._call_cohere(prompt, temperature)
         return raw_response.strip()
 
     def _extract_sql_from_response(self, response: str) -> str:
